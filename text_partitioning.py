@@ -15,6 +15,32 @@ def partition_string(input_string):
     return sentences, helper
 
 
+def replace_substring(str_main, str_to_replace, replacement_str):
+    '''
+    takes three strings, str_main, a substring of str_main, str_to_replace, and a third string, replacement_str 
+    and returns a string that is str_main, except with replacement_str in the position where str_to_replace was
+    '''
+    index = case_insensitive_find(str_main, str_to_replace)
+    
+    if index == -1:
+        # If the substring to be replaced is not found, return the original string
+        return str_main
+    
+    # Construct the modified string
+    result = str_main[:index] + replacement_str + str_main[index + len(str_to_replace):]
+    return result
+
+
+def case_insensitive_find(main_string, sub_string):
+    '''
+    find where a substring occurs within a larger string, except in contrast to python's version, this one is 
+    case insensitive
+    '''
+    main_lower = main_string.lower()
+    sub_lower = sub_string.lower()
+    return main_lower.find(sub_lower)
+
+
 def case_insensitive_replace_substring(str_main, str_to_replace, replacement_str):
     '''
     takes three strings, str_main, a substring of str_main, str_to_replace, and a third string, replacement_str 
@@ -38,6 +64,7 @@ def create_helper(input_string, sentences):
         input_string = case_insensitive_replace_substring(input_string, s, repl_str )
         i += 1
     return input_string
+
 
 def reconstruct_description(sentences, helper):
     i = 1

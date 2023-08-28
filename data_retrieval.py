@@ -7,6 +7,7 @@ Created on Mon Aug 21 11:07:35 2023
 import mysql.connector
 from mysql.connector import Error
 import pandas as pd
+import json
 
 
 def read_query(connection, query):
@@ -82,3 +83,49 @@ def q_all(tbl):
             ', '.join(["{}".format(value) for value in tbl]))
         
     return q
+
+
+def open_json_safe(file_name):
+    '''
+    Takes the name of the json file with the list of dicts, and makes sure the user has saved the information
+    in the list of dicts, before opening it. Also, converts job id's to ints.
+    '''
+    user_input = input("When you run this function, you might overwrite the data in the data structure in python that you are "
+                    "labelling. Are you sure you want to run it? (y/n): ")
+    
+    while user_input.lower() not in ['y', 'n']:
+        print("Invalid input. Please enter 'y' to continue or 'n' to exit.")    
+    
+    if user_input.lower() == 'y':
+        with open(file_name, 'r') as file:
+            data = json.load(file)
+        
+        #bc json files can't save ints, need to convert the job ids back to ints
+        for d in data:
+            d['job_id'] = int(d['job_id'])
+                
+        return data 
+    
+    else:
+        print('No data structure was returned')
+
+
+def save_json_file(list_of_dicts, file_name):
+    
+    user_input = input("Are you sure you want to save the json file? "
+                    "If you by mistake save it when you are just testing stuff "
+                    "it might be a pain to fix? (y/n): ")
+    
+    while user_input.lower() not in ['y', 'n']:
+        print("Invalid input. Please enter 'y' to continue or 'n' to exit.")      
+    
+    if user_input.lower() == 'y':    
+        for d in list_of_dicts:
+            d['job_id'] = str(d['job_id'])
+            
+        list_of_dicts_json = json.dumps(list_of_dicts)
+        with open(file_name, 'w') as f:
+            f.write(list_of_dicts_json)
+
+    else:
+        print('The json file was not updated and saved.')   

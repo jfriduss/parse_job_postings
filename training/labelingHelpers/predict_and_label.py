@@ -5,7 +5,8 @@ Created on Sat Aug 26 12:03:53 2023
 @author: jonat_od7omk3
 """
 import ast
-from predict_and_label_helpers import classify_sentences, tok_sent_and_classify_toks, html_w_labs_and_num_align_to_word
+from .predict_and_label_helpers import classify_sentences, tok_sent_and_classify_toks
+from .predict_and_label_helpers import html_w_labs_and_num_align_to_word
 
 def predict_and_label(d, sent_classifier_mod, sent_classifier_tok, tok_classifier_mod, tok_classifier_tok):
     '''
