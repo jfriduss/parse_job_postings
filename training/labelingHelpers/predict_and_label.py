@@ -5,10 +5,30 @@ Created on Sat Aug 26 12:03:53 2023
 @author: jonat_od7omk3
 """
 import ast
+
+
 from .predict_and_label_helpers import classify_sentences, tok_sent_and_classify_toks
 from .predict_and_label_helpers import html_w_labs_and_num_align_to_word
 
+#if want to have the function have default models and tokenizers, uncomment the below
+#(though it is probably a bad idea)
+
+# from transformers import AutoModelForTokenClassification, AutoTokenizer
+#from training.ft_sentence_classification_helpers import CustomModel
+
+# default_sent_classifier_mod = CustomModel("has-abi/distilBERT-finetuned-resumes-sections", num_labels = 2)
+# default_sent_classifier_tok = AutoTokenizer.from_pretrained("has-abi/distilBERT-finetuned-resumes-sections")
+# default_tok_classifier_mod = AutoModelForTokenClassification.from_pretrained("jjzha/jobbert_knowledge_extraction")
+# default_tok_classifier_tok = AutoTokenizer.from_pretrained("jjzha/jobbert_knowledge_extraction")
+
+
+
 def predict_and_label(d, sent_classifier_mod, sent_classifier_tok, tok_classifier_mod, tok_classifier_tok):
+
+                      # sent_classifier_mod = default_sent_classifier_mod, 
+                      # sent_classifier_tok = default_sent_classifier_tok, 
+                      # tok_classifier_mod = default_tok_classifier_mod, 
+                      # tok_classifier_tok = default_tok_classifier_tok):
     '''
     This function takes a dictionary with information about the job description, in the same form used throughout the project:
         -keys: 'job_id', 'sentences', 'helpers', 'labels', where labels has both the sentence classification and NER labels
