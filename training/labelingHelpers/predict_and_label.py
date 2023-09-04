@@ -85,7 +85,7 @@ def predict_and_label_sentences(d, s_mod, s_tok):
     #write sentences, and the index in the d['sents'] that they appear, to an html file
     #with sentences bolded if model predicts has relavent tokens and normal if not
     
-    html_sentences_and_indices = "Black: 'Does not contain words to label'\nRed: 'contains words to label'<br><br>"
+    html_sentences_and_indices = "Black: 'Does not contain words to label'<br>Red: 'contains words to label'<br><br>"
     for i in range(len(d_sent['sents'])):
         html_sentences_and_indices += "<b>" + str(i) + "</b> "
         if (d_sent['labs'][i] == 0): html_sentences_and_indices += d_sent['sents'][i]
@@ -132,7 +132,7 @@ def predict_and_label_tokens(d, t_mod, t_tok):
     #find sentences labelled '1' and whose tokens do not have a label, and call 
     # 'predict_and_label_tokens' on these sentences
     
-    html_output = "black: 'O'\nred: 'B' \ngreen: 'I' <br><br>" 
+    html_output = "black: 'O'<br>red: 'B' <br>green: 'I' <br><br>" 
     l_tok = []
     
     #will contain a list of dictionaries of the form d_tok = {'i_sent': i, 'i_l_tok': j, 'words_w_labs': []},

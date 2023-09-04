@@ -37,8 +37,10 @@ class CustomModel(nn.Module):
 
         #Load Model with given checkpoint and extract its body
         self.model = AutoModel.from_pretrained(checkpoint,config=AutoConfig.from_pretrained(checkpoint, output_attentions=True,output_hidden_states=True))
+        self.model.to(torch.device("cuda" if torch.cuda.is_available() else "cpu"))
+        
         self.dropout = nn.Dropout(0.1)
-        self.classifier = nn.Linear(768,num_labels) # load and initialize weights
+        self.classifier = nn.Linear(768, num_labels).to(self.model.device) # load and initialize weights
 
     def forward(self, input_ids=None, attention_mask=None,labels=None):
         #Extract outputs from the body

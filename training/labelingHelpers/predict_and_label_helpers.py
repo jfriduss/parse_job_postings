@@ -135,10 +135,6 @@ def process_and_predict(list_of_lists):
     'group_tuples_by_first_index', and then converts these to a list of tuples, with each tuple having a word, 
     and the label assigned to that word, where the label is determined by taking a weighted average of the 
     predictions that the model outputs on the tokens that make up the word
-    
-    note: I had chatgpt write this function. I should make sure for myself that it works as intended (for example,
-    that it takes the weighted average in the way that I expect it to)
-    
     '''
     results = []
     
@@ -159,7 +155,7 @@ def process_and_predict(list_of_lists):
         # Make prediction based on weighted average probabilities
         prediction = weighted_probabilities.index(max(weighted_probabilities))
         
-        results.append((concatenated_string, prediction))
+        results.append([concatenated_string, prediction])
     
     return results
 
