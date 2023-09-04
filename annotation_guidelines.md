@@ -51,9 +51,10 @@
 
       
 
-- **(6) Handling abbreviations:** Abbreviations of things that should be annotated, should themselves be annotated if either (i) the word that they are an abbreviation for is returned when searching "what is *specific_abbreviation* an abbreviation for, in the context of jobs" into a search engine, or (ii) the abbreviation is in a sentence with an industry/field of work, and the word that the abbreviation is for is returned when searching "what might *specific_abbreviation* be an abbreviation for, in the context of *specific_industry/field_of_work*" into a search engine.
+- **(6) Handling abbreviations:** Abbreviations of things that should be annotated, should themselves be annotated if either (i) the word that they are an abbreviation for is returned when searching "what is *specific_abbreviation* an abbreviation for, in the context of jobs" into a search engine, or (ii) the word that the abbreviation is for is returned when searching "what might *specific_abbreviation* be an abbreviation for, in the context of *specific_industry/field_of_work*" into a search engine, where "specific industry" is the industry that the position is in.
 
   - example: in the phrase "Experience working with native machine learning orchestration systems like MLflow, Airflow, or TFX", the abbreviation "TFX" is annotated because an explanation for what it is is returned when searching "what might TFX be an abbreviation for, in the context of machine learning?"
+  - example: "...DNA - encoded library ( DEL ) platform" is annotated DNA (B) - (B) encoded (B) library (I) ( DEL (B) ) platform (O). But note that if the abbreviation were not there, "platform would be annotated"; the phrase "...DNA - encoded library platform" is labelled DNA (B) - (B) encoded (B) library (I) platform (I).
 
 
 
@@ -69,13 +70,14 @@
 
   - (8b) abstract, general qualities that are difficult to assess, that the company wants the applicant to have (e.g. self-starter, team-player, storyteller, data-wrangler etc.) 
 
-  - (8c) abstract concepts that can be done across many domains/industries, that are useless without more context. Note: concrete technologies that are sufficiently ubiquitous (e.g. Microsoft Office) **are** annotated
+  - (8c) abstract concepts that can be done across many domains/industries, that are useless without more context. Note: concrete technologies that are ubiquitous (e.g. Microsoft Office) **are** annotated
 
     - example: "research" in the phrase "you will conduct research" is **not** annotated
 
     - example: "breakthrough" in the phrase "you will create breakthroughs" is **not** annotated
 
     - example: "data" in the phrase "the position involves storage and delivery of data" is **not** annotated
+    - example: "mentoring" in the phrase "foster a culture of mentoring across teams by..."
 
   - (8d) entities that the person/team is doing the task for (e.g. "customers", "end users"), unless the word is a part of a concept that can be learned about to improve at the position (e.g. "customer satisfaction" **is** annotated)
 
@@ -87,8 +89,6 @@
 
       
 
-  
-
 - **(9) More examples:**
 
   - phrase: "Identify and eliminate bottlenecks in the **ML stack**, from **data-loading** up to the **GPU**"
@@ -97,6 +97,8 @@
     - note: determining to label "unstructured data" required using rule 4d-v
   - phrase: "We have been building a cutting-edge, machine-learning-enabled capability to design..."
     - note: nothing in this phrase is labelled, because a "machine-learning enabled capability" is too abstract (8c)
+  - sentence: "Our client’s machine learning products are their core value proposition for their customers, so ML efficiency has a direct connection to their value to customers and as a company."
+    - note: this phrase comes from a job posting from a recruiter, so the language is atypical--their "client" is the company that the applicant would be working for. For this reason, "machine learning products" and "ML efficiency" are both annotated, because, were the applicant to get the position, those are things that the company broadly works on as a whole, and by rule 3, should be annotated.
 
 
 
@@ -108,6 +110,7 @@
     - example (from 4): two sets of entities would be extracted from the phrase "monitoring model input and output data distributions": "model input data distributions" and model output data distributions
   - Develop guidelines to handle verbs 
   - Label words according to the section that they appear. For example, have "B-skills" and "I-skills" to label words that describe skills that the company desires the applicant to have, versus "B-responsibilities" and "I-responsibilities" to label words that describe the responsibilities that a worker in the position has
+  - use a well-defined process to determine when the guidelines are sufficiently stable -- e.g. "N postings have been annotated by M people, with less than K% disagreement between the annotations"
 
 
 
