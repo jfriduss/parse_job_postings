@@ -18,6 +18,10 @@ from .ft_sentence_classification_helpers import train_custom_model
 
 from .ft_token_classification_helpers import create_token_classification_train_test_dataset
 
+import evaluate
+
+import numpy as np
+
 import os
 
 #from data_retrieval import open_json_safe
@@ -143,11 +147,35 @@ def ft_token_classification_model(list_of_dicts,
         train_dataset = train_test["train"],
         eval_dataset = train_test["test"],
         data_collator = data_collator,
-        compute_metrics = None,
+        compute_metrics = compute_metrics,
         tokenizer = tokenizer)
 
     trainer.train()
     trainer.save_model('tok_train_info')    
+
+
+def compute_metrics(eval_preds):
+    logits, labels = eval_preds
+    
+    #note: how the logits are processed depends on the head of the model 
+    predictions = np.argmax(logits[0], axis=-1) 
+    label_names = {0: 'B', 1: 'I', 2: 'O'}
+    
+    # Remove ignored index (special tokens) and convert to labels
+    true_labels = [[label_names[l] for l in label if l != -100] for label in labels]
+    true_predictions = [
+        [label_names[p] for (p, l) in zip(prediction, label) if l != -100]
+        for prediction, label in zip(predictions, labels)
+    ]
+    
+    metric = evaluate.load("seqeval")
+    all_metrics = metric.compute(predictions=true_predictions, references=true_labels)
+    return {
+        "precision": all_metrics["overall_precision"],
+        "recall": all_metrics["overall_recall"],
+        "f1": all_metrics["overall_f1"],
+        "accuracy": all_metrics["overall_accuracy"],
+    }
     
 
 
