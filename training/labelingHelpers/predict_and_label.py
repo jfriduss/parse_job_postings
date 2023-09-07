@@ -110,9 +110,35 @@ def predict_and_label_sentences(d, s_mod, s_tok):
             
     ind_mislabelled = [int(n) for n in ind_mislabelled] 
     
+    #treating a 'has a token that should be labelled'/'1' as a 'positive and 
+    #'doesn't have a token that should be labelled'/'0' as a 'negative', want to 
+    #calculate the accuracy and recall of the token classification
+
+    TP = 0    
+    FP = 0
+    TN = 0
+    FN = 0
+    
     #correct the labels that were mislabelled
     for i in range(len(d_sent['labs'])):
-        if i in ind_mislabelled: d_sent['labs'][i] = ((d_sent['labs'][i] + 1) % 2) #converts 0 --> 1 and 1 --> 0    
+        if i in ind_mislabelled: 
+            if (d_sent['labs'][i]) == 0: FN += 1
+            if (d_sent['labs'][i]) == 1: FP += 1
+            d_sent['labs'][i] = ((d_sent['labs'][i] + 1) % 2) #converts 0 --> 1 and 1 --> 0    
+        
+        else:
+            if (d_sent['labs'][i]) == 0: TN += 1
+            if (d_sent['labs'][i]) == 1: TP += 1            
+    
+    # print("\nsentence classification:\n\tTP: " + str(TP) + "\n\tTN: " + str(TN) + "\n\tFP:" 
+    #       + " " + str(FP) + "\n\tFN " + str(FN))    
+    
+    accuracy = (TP + TN) / (TP + TN + FP + FN)
+    recall = TP/ (TP + FN)   
+    
+    print("\nFor this job description, the metrics on the sentence classifier are:"
+          "\n\t" + "accuracy: " + str(accuracy) +
+          "\n\t" + "recall: " + str(recall))
     
     #put labels into the dictionary
     i = 0
@@ -180,11 +206,71 @@ def predict_and_label_tokens(d, t_mod, t_tok):
 
     except (ValueError, SyntaxError):
         print("Invalid input. Please enter a tuple with an integer and a list.")
-        
-    #change the labels of the mislabelled words, as indicated by 'mislab_words', to the correct labels    
-    for lst in mislab_words:
-        l_tok[lst[0]]['words_w_labs'][lst[1]][1] = lst[2]
     
+        
+    #treating a 'B' or 'I' as a 'positive', and a '2' as a 'negative', want to 
+    #calculate the accuracy and recall of the token classification, so need the 
+    #true positives, true negatives, false negatives, and the total number of tokens
+    
+    TP = 0
+    TN = 0
+    FN = 0
+    FP = 0 #keeping tract of this, so that can do a sanity check
+    total_number_of_tokens = 0
+    
+    
+    #change the labels of the mislabelled words, as indicated by 'mislab_words', to the correct labels 
+    #as well as get the number of "false negatives
+    for lst in mislab_words:
+        #
+        #lst[0] - index sentence of label changing
+        #lst[1] - index word of label changing
+        #lst[2] - the label that it should be changed to
+        
+        predicted_label = l_tok[lst[0]]['words_w_labs'][lst[1]][1]
+        true_label = lst[2]
+        
+        if ( ((true_label == 0) | (true_label == 1)) & (predicted_label == 2) ):
+            FN += 1
+            
+        if ( ((predicted_label == 0) | (predicted_label == 1)) & (true_label == 2) ):
+            FP += 1
+            
+        #change the predicted label to the true label (so that the can store
+        #the correct label in the dictionary)
+        l_tok[lst[0]]['words_w_labs'][lst[1]][1] = lst[2]
+                
+    
+    accounted_for_indices = [(lst[0], lst[1]) for lst in mislab_words]
+    
+    #get number of true positives, true negatives, and the total number of tokens 
+    j = 0
+    for j in range(len(l_tok)):
+        d_tok = l_tok[j]
+        total_number_of_tokens += len(d_tok['words_w_labs'])
+        k = 0
+        for k in range(len(d_tok['words_w_labs'])):
+            if (j,k) not in accounted_for_indices:
+                lab = l_tok[j]['words_w_labs'][k][1]
+                
+                if (lab == 0) | (lab == 1):
+                    TP += 1 
+                    
+                if (lab == 2):
+                    TN += 1
+    
+    #print("consistency check: " + str(TP + TN + FP + FN) + " " + str(total_number_of_tokens))                
+    
+    # print("\ntoken classification:\n\tTP: " + str(TP) + "\n\tTN: " + str(TN) + "\n\tFP:" 
+    #       + " " + str(FP) + "\n\tFN " + str(FN))        
+    
+    accuracy = (TP + TN) / (TP + TN + FP + FN)
+    recall = TP/ (TP + FN)    
+    
+    print("\nFor this job description, the metrics on the token classifier are:"
+          "\n\t" + "accuracy: " + str(accuracy) +
+          "\n\t" + "recall: " + str(recall))
+                    
     #mapping 'labels on words' to 'labels on tokens' and put the labels in the dictionary
     for d_sent_tok in l_tok:
         sent_ind_in_d = d_sent_tok['i_sent'] 

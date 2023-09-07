@@ -36,6 +36,42 @@ def after_labelling(d, token_class_tok, n_unsure):
     
     reconstruct_ad_w_bolded_skills(d, token_class_tok ,0)
     
+
+def get_which_postings_are_labelled(list_of_dicts):
+    has_labelled_sentences = []
+    has_labelled_tokens = []
+    
+    i = 0
+    
+    for d in list_of_dicts:
+        toks_labelled = 1
+        for labels in d['labels']:
+            tok_labs = [labs for labs in labels[1]]
+    
+            if (('na' in tok_labs) & ((labels[0] == 1) | (labels[0] == 'na') )): 
+                toks_labelled = 0
+    
+        if (toks_labelled == 1) : has_labelled_tokens.append(i)
+
+        sent_labs = [labs[0] for labs in d['labels']]
+        if 'na' not in sent_labs:
+            has_labelled_sentences.append(i)
+            
+        i += 1
+    
+    
+    print('The sentences in the job descriptions stored at indices'
+          ' ' + str(has_labelled_sentences) + ' are all labelled.\n')
+    
+    print('The sentences in the job descriptions stored at indices'
+          ' ' + str(has_labelled_tokens) + ' have all their tokens '
+          'labelled as well.')    
+
+
+def reset_sentence_labels(d):
+    for i in range(len(d['labels'])):
+        d['labels'][i][0] = 'na'
+    
     
 def update_tokens_label(d, tokenizer_token_classification):
 
