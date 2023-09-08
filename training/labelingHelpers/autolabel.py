@@ -11,9 +11,9 @@ from text_partitioning import replace_substring
 import random
 
 
-def autolabel(jobs_dicts, word, percent, section, label, related_words):
+def autolabel(jobs_dicts, word, label, percent = 5 , section = 0, related_words = []):
     '''
-    Takes the list of dictionaries, a keyword, label assigned to that keyword, and a list of 
+    Takes the list of dictionaries, a keyword, the label assigned to that keyword, and a list of 
     keywords from another field. The keyword is used to label sentences with that keyword with 
     the appropriate label, and the list of keywords is used to data augmentation.
         Note: it outputs an html file for the user to look through and choose the sentences that should get
