@@ -6,7 +6,7 @@ Created on Mon Sep 11 15:16:30 2023
 """
 
 from transformers import AutoTokenizer, AutoModelForTokenClassification
-from training.ft_sentence_classification_helpers import CustomModel
+from career_fit_tools.training.ft_sentence_classification_helpers import CustomModel
 import os
 
 sentence_classification_model = None

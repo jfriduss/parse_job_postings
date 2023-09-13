@@ -5,7 +5,7 @@ Created on Mon Aug 21 15:14:37 2023
 @author: jonat_od7omk3
 """
 import re
-from training.labelingHelpers.predict_and_label_helpers import group_tuples_by_first_index
+from career_fit_tools.training.labeling_helpers.predict_and_label_helpers import group_tuples_by_first_index
 
 def partition_string(input_string):
     sentences = re.split(r'(?<=[.!?])\s+|\n', input_string)
@@ -75,7 +75,7 @@ def reconstruct_description(sentences, helper):
     return helper
 
 
-def reconstruct_ad_w_bolded_skills(d, tok, mode):
+def reconstruct_ad_w_bolded_skills(d, tok, mode = 0):
     sentences = d['sentences']
     recr_posting = d['helpers']
     labels = d['labels']

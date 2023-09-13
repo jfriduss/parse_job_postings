@@ -4,9 +4,9 @@ Created on Mon Sep 11 15:10:42 2023
 
 @author: jonat_od7omk3
 """ 
-from text_partitioning import partition_string, reconstruct_ad_w_bolded_skills
-from training.labelingHelpers.predict_and_label_helpers import tok_sent_and_classify_toks
-from training.labelingHelpers.predict_and_label_helpers import classify_sentences
+from career_fit_tools.misc_code.text_partitioning import partition_string, reconstruct_ad_w_bolded_skills
+from career_fit_tools.training.labeling_helpers.predict_and_label_helpers import tok_sent_and_classify_toks
+from career_fit_tools.training.labeling_helpers.predict_and_label_helpers import classify_sentences
 
 from career_fit_tools.get_if_qualified_indicators_helpers import load_model
 from career_fit_tools.get_if_qualified_indicators_helpers import get_entities_from_words_and_labels

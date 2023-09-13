@@ -5,7 +5,7 @@ Created on Sun Aug 27 10:48:23 2023
 @author: jonat_od7omk3
 """
 import ast
-from text_partitioning import case_insensitive_find
+from career_fit_tools.misc_code.text_partitioning import case_insensitive_find
 
 
 def get_mode_a_sentence_dicts(jobs_dicts, word):

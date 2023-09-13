@@ -4,10 +4,10 @@ Created on Wed Aug 30 18:06:47 2023
 
 @author: jonat_od7omk3
 """
-from text_partitioning import reconstruct_ad_w_bolded_skills
-import ast
+from career_fit_tools.misc_code.text_partitioning import reconstruct_ad_w_bolded_skills
+from career_fit_tools.training.labeling_helpers.predict_and_label_helpers import html_w_labs_and_num_align_to_word
 
-from training.labelingHelpers.predict_and_label_helpers import html_w_labs_and_num_align_to_word
+import ast
 
 def after_labelling(d, token_class_tok, n_unsure):
     '''

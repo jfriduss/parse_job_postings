@@ -7,7 +7,7 @@ Created on Sun Aug 27 10:32:49 2023
 from .autolabel_helpers import get_mode_a_sentence_dicts, get_mode_b_sentence_dicts
 from .autolabel_helpers import get_mode_one_indices, get_mode_two_indices
 from .autolabel_helpers import find_index_by_key_value
-from text_partitioning import replace_substring
+from career_fit_tools.misc_code.text_partitioning import replace_substring
 import random
 
 

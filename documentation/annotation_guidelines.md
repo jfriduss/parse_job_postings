@@ -29,7 +29,7 @@
   - *(4d-iv)* When the qualifications/qualities/skills that the company wants the applicant to have is framed as a question, annotate these as would be annotated if they were listed in a more conventional way.
     - example: "machine learning" and "NLP" are annotated in the sentence "Do you love machine learning and NLP?"
   - **(4d-v) For nouns that the above guidelines do not clearly indicate whether or not to annotate it, use a search engine to search "what is *specific_noun* , in the context of jobs"; if it returns a concrete thing related to the job, that can be learned about to become more qualified for the position, then annotate. If not, do not annotate it.**
-    - example: "reusable platform component",  "business process", "strategic organizational decisions" are all annotated, because when they are searched, they bring up a concrete idea that can be researched, and that an applicant can improve their facility with the concept. But "autonomous development" is note annotated, because when it is searched, it brings up resources about child rearing, which is unrelated to the position of the job description that it appeared in.
+    - example: "reusable platform component",  "business process", "strategic organizational decisions" are all annotated, because when they are searched, they bring up a concrete idea that can be researched, and that an applicant can improve their facility with the concept. But "autonomous development" is not annotated, because when it is searched, it brings up resources about child rearing, which is unrelated to the position of the job description that it appeared in.
 
   
 
@@ -47,7 +47,7 @@
       - example: "proprietary" in "proprietary docking library" is **not** annotated
       - example: "cutting-edge" in "cutting-edge machine learning model" is **not** annotated
 
-    - *(5a-iv)* if it is still unclear whether or not to annotate the adjective, ask yourself "could this guide the study of 'learning more about the subject', or not". If yes, annotate the adjective; else, do not annotate it.
+    - *(5a-iv)* if it is still unclear whether or not to annotate the adjective, ask yourself "could this guide the study of 'learning more about the subject', or not". If yes, annotate the adjective; else, do not annotate it. (?) Or google "particular_adjective particular_noun" and "particular_noun", and see whether the adjective makes a difference in the of how useful the concept is. 
 
       
 
@@ -108,7 +108,7 @@
   - Be able to handle modifying nouns that aren't adjacent to the noun of interest
     - example (from 4): three sets of entities would be extracted from the phrase "model development, validation, and implementation": "model (B) development (I)", "model (B) validation (I)", and "model (B) implementation (I)"
     - example (from 4): two sets of entities would be extracted from the phrase "monitoring model input and output data distributions": "model input data distributions" and model output data distributions
-  - Develop guidelines to handle verbs 
+  - Develop guidelines to handle verbs and adverbs 
   - Label words according to the section that they appear. For example, have "B-skills" and "I-skills" to label words that describe skills that the company desires the applicant to have, versus "B-responsibilities" and "I-responsibilities" to label words that describe the responsibilities that a worker in the position has
   - use a well-defined process to determine when the guidelines are sufficiently stable -- e.g. "N postings have been annotated by M people, with less than K% disagreement between the annotations"
 
