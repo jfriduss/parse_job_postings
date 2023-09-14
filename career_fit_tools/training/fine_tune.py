@@ -23,12 +23,14 @@ import evaluate
 import numpy as np
 
 import os
+from dotenv import load_dotenv
 
 #from data_retrieval import open_json_safe
 
 from collections import Counter
 
-hf_token = os.environ.get('HF_hub_token')
+load_dotenv()
+hf_token = os.getenv('HF_hub_token')
 
 def fine_tune(data, sent_classifier_mod, sent_classifier_tok, tok_classifier_mod, tok_classifier_tok):
 

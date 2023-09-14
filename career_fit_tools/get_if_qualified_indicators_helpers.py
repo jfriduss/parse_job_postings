@@ -8,11 +8,12 @@ Created on Mon Sep 11 15:16:30 2023
 from transformers import AutoTokenizer, AutoModelForTokenClassification
 from career_fit_tools.training.ft_sentence_classification_helpers import CustomModel
 import os
+from dotenv import load_dotenv
 
 sentence_classification_model = None
 token_classification_model = None
 
-path_to_sentence_classification_m = os.environ.get('PATH2MODEL')
+path_to_sentence_classification_m = os.getenv('PATH2MODEL')
 
 
 def load_model(use_sentence_classifier):

@@ -3,3 +3,8 @@ __pycache__/
 test_file.json
 testing_stuff.ipynb
 *.html
+sentence_classifier_model
+not_version_controlling
+data/sample_job_descriptions_w_extra_sentences_classified.json
+career_fit_tools/noteToSelf.txt
+.env
