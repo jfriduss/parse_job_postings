@@ -12,24 +12,32 @@ def classify_sentences(tokenizer, model, sentences):
     '''
     takes a CustomModel, the tokenizer that goes with the model, and a list of sentences, 
     and returns the list of predicted labels that coorespond to each sentence
+    
+    note: changed this from trying to create a batch of all of the sentences, and then processing all at once,
+    to running the model on each sentence one at a time. Sped up the classification by 20-100 times, and stopped 
+    the memory errors from occuring every few runs. 
     '''
-    tokenized_sentences = tokenizer(sentences, padding="max_length")
     
-    #tokenizer outputs lists, we need tensors
-    tokenized_sentences['input_ids_tens'] = torch.Tensor(tokenized_sentences['input_ids'])
-    tokenized_sentences['attention_mask_tens'] = torch.Tensor(tokenized_sentences['attention_mask'])
-    
-    #has issues unless the data in the tensors are stored as int64's
-    tokenized_sentences['input_ids_tens'] = tokenized_sentences['input_ids_tens'].to(torch.int64)
-    tokenized_sentences['attention_mask_tens'] = tokenized_sentences['attention_mask_tens'].to(torch.int64)
-    
-    outp = model.forward(input_ids=tokenized_sentences['input_ids_tens'],
-                         attention_mask=tokenized_sentences['attention_mask_tens'])
-    
-    outp_probabilities = torch.nn.functional.softmax(outp.logits, dim=-1)
-    lab_w_max_prob = torch.argmax(outp_probabilities, dim=1) #find the index that the max probability appears, in each row
-    
-    return lab_w_max_prob.tolist()
+    labels_w_max_prob = []
+    for s in sentences:
+        tokenized_sentence = tokenizer(s)
+        
+        #tokenizer outputs lists, we need tensors
+        tokenized_sentence['input_ids_tens'] = torch.Tensor([tokenized_sentence['input_ids']])
+        tokenized_sentence['attention_mask_tens'] = torch.Tensor([tokenized_sentence['attention_mask']])
+        
+        #has issues unless the data in the tensors are stored as int64's
+        tokenized_sentence['input_ids_tens'] = tokenized_sentence['input_ids_tens'].to(torch.int64)
+        tokenized_sentence['attention_mask_tens'] = tokenized_sentence['attention_mask_tens'].to(torch.int64)
+        
+        outp = model.forward(input_ids=tokenized_sentence['input_ids_tens'],
+                             attention_mask=tokenized_sentence['attention_mask_tens'])
+        
+        outp_probabilities = torch.nn.functional.softmax(outp.logits, dim=-1)
+        lab_w_max_prob = torch.argmax(outp_probabilities, dim=1) #find the index that the max probability appears, in each row
+        labels_w_max_prob.extend(lab_w_max_prob.tolist())
+        
+    return labels_w_max_prob
 
 
 def tok_sent_and_classify_toks(tokenizer, model, sentence):

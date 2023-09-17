@@ -1,0 +1,13 @@
+DB_PASS = password to MySQL community server
+
+HF_hub_token = hugging face token to access model hub
+
+PATH2MODEL = path to files to rebuild sentence classification model
+
+PATH2ROOT_DIR = path to root directory of the project
+
+PATH2SAMPLE_PIPELINE_INPUTS = path to the sample pipeline inputs (stored in the data folder)
+
+PATH2SAMPLE_TRAINING_DATA = path to the sample training data (stored in the data folder)
+
+

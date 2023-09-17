@@ -35,9 +35,6 @@ def load_model(use_sentence_classifier):
         if sentence_classification_model is None:
             # Load and initialize the sentence classification model the first time
             sentence_class_mod = CustomModel("has-abi/distilBERT-finetuned-resumes-sections", num_labels = 2)
-
-            # p2model = "./model_contents/hf"
-            # f_lin = "./model_contents/linear_layer_for_sent_classifier_fr_colab.pth"
             
             p2model = path_to_sentence_classification_m + 'hf'
             f_lin = path_to_sentence_classification_m + 'linear_layer_for_sent_classifier_fr_colab.pth'
