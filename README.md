@@ -30,6 +30,7 @@ Within the [job analytics tools module](career_fit_tools/job_analytics_tools.py)
 
 
 
+
 - in progress: a tool that takes entities drawn from numerous job descriptions, and reduces the entity space in a systematic way, so that analytics can be done to draw meaningful conclusions.
 
   
